@@ -12,16 +12,27 @@
 <body>
     <div class="mt-lg-5 col-lg-6 col-11 mt-3 container mx-auto shadow p-3">
         <h1 class="text-center text-decoration-underline">Todo Application</h1>
-        <p class="alert alert-danger text-center fs-6 p-2" style="display: none;" id="showError">Alaye, when you are not
-            blind. Fill in something joor</p>
+        <p class="alert alert-danger text-center fs-6 p-2" style="display: none;" id="showError">Alaye, when you are not blind. Fill in something joor</p>
         <input type="text" class="form-control form-control-sm shadow-none my-3" placeholder="Add todo" id="todo">
         <input type="text" class="form-control form-control-sm shadow-none my-3" placeholder="Todo Description"
             id="desc">
         <button class="btn btn-dark btn-sm my-3 w-100" onclick="addTodo()">Submit</button>
-        <button class="btn btn-danger btn-sm my-3 w-100" onclick="deLast()">Delete last</button>
+        <p class="p-3 alert alert-secondary text-center mt-4" id="showNoTodo">No Todo added yet</p>
+        
+        <div id="show"></div>
+        <div id="allButtons" style="display: none;">
+            <div class="row">
+                <button class="btn btn-danger btn-sm my-3 w-100 col mx-3" onclick="deLast()">Delete last</button>
+                <button class="btn btn-dark btn-sm my-3 w-100 col mx-3" onclick="deLast()">Delete first</button>
+                <button class="btn btn-info btn-sm my-3 w-100 col mx-3" onclick="deLast()">Add to start</button>
+                <button class="btn btn-primary btn-sm my-3 w-100 col mx-3" onclick="deAny()">Delete any</button>
+                <button class="btn btn-warning btn-sm my-3 w-100 col mx-3" onclick="deLast()">Edit any</button>
+                <button class="btn btn-secondary btn-sm my-3 w-100 col mx-3" onclick="deLast()">Delete all</button>
+    
+            </div>
+        </div>
     </div>
 
-    <div id="show"></div>
 
     <script>
         var allTodos = []
@@ -37,7 +48,9 @@
                 // alert("Alaye, when you are not blind. Fill in something joor")
                 showError.style.display = 'block'
             } else {
+                showNoTodo.style.display = 'none'
                 showError.style.display = 'none'
+                allButtons.style.display = 'block'
                 var todoObj = {
                     todo: inputOne,
                     desc: inputTwo,
@@ -59,6 +72,18 @@
             console.log(allTodos);
         }
 
+        function deAny() {
+            var collectedNumber = Number(prompt("Which number do you want to delete?"))
+            console.log(collectedNumber);
+            // if (collectedNumber < allTodos.length)
+            if (collectedNumber > allTodos.length) {
+                alert("Maximum size exceeded")
+            } else {
+                allTodos.splice(collectedNumber-1, 1)
+                displayTodo()
+            }
+        }
+
         function displayTodo() {
             show.innerHTML = ''
                 for (var i = 0; i < allTodos.length; i++) {
@@ -68,11 +93,18 @@
                     var showedTime = allTodos[i].time
 
                     show.innerHTML += `
-                        <h1>${showedTodo}</h1>
-                        <h3>${showedDesc}</h3>
-                        <small>${showedDate}, ${showedTime}</small>
+                        <div class="p-3 shadow my-4">
+                            <div>${i+1}</div>
+                            <h3>${showedTodo}</h3>
+                            <h5>${showedDesc}</h5>
+                            <small>${showedDate}, ${showedTime}</small>
+                        </div>
                     `
                 }
+        }
+
+        for (i=0; i<=10; i++) {
+            console.log(i);
         }
     </script>
 </body>
